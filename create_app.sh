@@ -96,6 +96,23 @@ echo "   open ${APP_BUNDLE}"
 # Make it executable
 chmod +x "${MACOS_DIR}/${APP_NAME}"
 
+# Sign the app bundle for distribution with ad-hoc signature
+echo "🔐 Signing app bundle for distribution..."
+
+# Use ad-hoc signing (no certificate needed, but helps with Gatekeeper)
+if codesign --force --deep --sign - "${APP_BUNDLE}" 2>/dev/null; then
+    echo "✅ App signed with ad-hoc signature!"
+    
+    # Verify signature
+    if codesign --verify --verbose=2 "${APP_BUNDLE}" 2>/dev/null; then
+        echo "✅ Signature verified!"
+    else
+        echo "⚠️  Warning: Signature verification failed, but continuing..."
+    fi
+else
+    echo "⚠️  Warning: Could not sign app, but continuing..."
+fi
+
 echo ""
 echo "🎉 JamfKiller.app is ready to eliminate popups!"
 echo "💀 Double-click to launch with full window focus!" 
