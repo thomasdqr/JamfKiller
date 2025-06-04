@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "JamfKiller",
     platforms: [
-        .macOS(.v14)
+        .macOS(.v13)
     ],
     products: [
         .executable(name: "JamfKiller", targets: ["JamfKiller"])
