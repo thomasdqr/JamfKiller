@@ -189,6 +189,42 @@ swift run
 - Grant permissions when macOS prompts
 - Check System Preferences → Security & Privacy
 
+**Build fails with "Undefined symbols" error?**
+
+This error typically occurs when using Command Line Tools instead of full Xcode:
+
+```
+error: 'jamfkiller': Invalid manifest
+Undefined symbols for architecture arm64:
+"PackageDescription.Package.__allocating_init..."
+```
+
+**Solutions (try in order):**
+
+1. **Use the Command Line Tools build script:**
+   ```bash
+   ./build-commandlinetools.sh
+   ```
+
+2. **Install full Xcode (recommended):**
+   ```bash
+   # Install Xcode from App Store, then:
+   sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+   ./build.sh
+   ```
+
+3. **Update Command Line Tools:**
+   ```bash
+   sudo xcode-select --install
+   ./build.sh
+   ```
+
+4. **Check your development environment:**
+   ```bash
+   swift --version
+   xcode-select --print-path
+   ```
+
 **Build fails?**
 ```bash
 swift package clean
@@ -198,7 +234,6 @@ swift build
 
 **Permission issues?**
 - Right-click app → Open (first time)
-- Allow in Security & Privacy settings
 
 ## 🎯 How It Solves Your Problem
 

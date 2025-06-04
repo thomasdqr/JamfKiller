@@ -1,6 +1,27 @@
 #!/bin/bash
 
 echo "🚀 Building JamfKiller (Swift Package)..."
+echo ""
+
+# Check development tools
+echo "🔍 Checking development environment..."
+echo "Swift version: $(swift --version | head -1)"
+echo "Xcode path: $(xcode-select --print-path)"
+echo "Command Line Tools version: $(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables 2>/dev/null | grep version || echo 'Not found')"
+echo ""
+
+# Check if using Command Line Tools vs full Xcode
+if [[ "$(xcode-select --print-path)" == *"CommandLineTools"* ]]; then
+    echo "⚠️  Warning: Using Command Line Tools instead of full Xcode"
+    echo "   This may cause build issues. Consider:"
+    echo "   1. Install Xcode from App Store, or"
+    echo "   2. Update Command Line Tools: sudo xcode-select --install"
+    echo "   3. Switch to Xcode: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer"
+    echo ""
+fi
+
+# Set the macOS deployment target to ensure compatibility
+export MACOSX_DEPLOYMENT_TARGET=14.0
 
 # Clean any previous builds
 echo "🧹 Cleaning previous builds..."
