@@ -1,10 +1,10 @@
-// swift-tools-version: 5.8
+// swift-tools-version: 5.9
 import PackageDescription
 
 let package = Package(
     name: "JamfKiller",
     platforms: [
-        .macOS(.v13)
+        .macOS(.v14)
     ],
     products: [
         .executable(name: "JamfKiller", targets: ["JamfKiller"])
@@ -12,7 +12,10 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "JamfKiller",
-            dependencies: []
+            dependencies: [],
+            swiftSettings: [
+                .enableUpcomingFeature("BareSlashRegexLiterals")
+            ]
         )
     ]
 ) 
